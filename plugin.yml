@@ -1,0 +1,14 @@
+name: MoonLakeCdkey
+main: com.minecraft.moonlake.cdkey.CdkeyPlugin
+version: 1.2
+author: Month_Light
+# depend MoonLake 1.8+
+# depend MoonLakeEconomy 1.4+
+depend: [MoonLake, MoonLakeEconomy]
+commands:
+  cdkey:
+    description: 将得到的兑换码进行兑换点券
+    usage: /cdkey <兑换码>
+  cdkeyop:
+    description: 兑换码插件管理员命令
+    usage: /cdkeyop help
