@@ -159,11 +159,11 @@ public class CdkeyMySQL implements MoonLakeCdkey {
 
 			if(result) {
 
-				Map<String, Object> resultCdkey = mySQLConnection.findResult("select cdkey from " + tableName + " where binary `cdkey`=?;", cdkey);
+				Object value = mySQLConnection.findSimpleResult("cdkey", "select cdkey from " + tableName + " where binary `cdkey`=?;", cdkey);
 
-				if(resultCdkey != null && resultCdkey.size() > 0) {
+				if(value != null) {
 
-					String sql_cdkey = (String) resultCdkey.get("cdkey");
+					String sql_cdkey = (String) value;
 					return ignoreCase ? cdkey.equalsIgnoreCase(sql_cdkey) : cdkey.equals(sql_cdkey);
 				}
 			}

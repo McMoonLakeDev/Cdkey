@@ -1,5 +1,6 @@
 package com.minecraft.moonlake.cdkey;
 
+import com.minecraft.moonlake.MoonLakePlugin;
 import com.minecraft.moonlake.cdkey.api.MoonLakeCdkey;
 import com.minecraft.moonlake.cdkey.commands.CdkeyCommand;
 import com.minecraft.moonlake.cdkey.commands.CdkeyopCommand;
@@ -22,8 +23,6 @@ public class CdkeyPlugin extends JavaPlugin {
     private MoonLakeEconomy economy;
     private final MLogger mLogger;
 
-    public static CdkeyPlugin MAIN;
-
     public CdkeyPlugin() {
 
         this.mLogger = new MLoggerWrapped("MoonLakeCdkey");
@@ -32,9 +31,15 @@ public class CdkeyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        if(!this.setupMoonLake()) {
+
+            this.getMLogger().error("前置月色之湖核心插件加载失败.");
+            this.getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         if(!this.setupMoonLakeEconomy()) {
-            // 加载前置失败
-            this.getMLogger().warn("前置月色之湖经济插件加载失败.");
+
+            this.getMLogger().error("前置月色之湖经济插件加载失败.");
             this.getServer().getPluginManager().disablePlugin(this);
             return;
         }
@@ -48,6 +53,12 @@ public class CdkeyPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
 
+    }
+
+    private boolean setupMoonLake() {
+
+        Plugin plugin = this.getServer().getPluginManager().getPlugin("MoonLake");
+        return plugin != null && plugin instanceof MoonLakePlugin;
     }
 
     private boolean setupMoonLakeEconomy() {
